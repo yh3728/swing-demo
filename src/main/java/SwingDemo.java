@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -39,11 +41,31 @@ public class SwingDemo {
 class SimpleFrame extends JFrame {
     private static final int DEFAULT_WIDTH = 300;
     private static final int DEFAULT_HEIGHT = 300;
+    private JPanel buttonPanel;
 
     public SimpleFrame() {
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        add(new NotHelloWorldComponent());
-        pack();
+
+        buttonPanel = new JPanel();
+        JButton yellowButton = new JButton("Yellow");
+        yellowButton.addActionListener(new ColorAction(Color.YELLOW));
+        buttonPanel.add(yellowButton);
+        JButton greenButton = new JButton("Green");
+        greenButton.addActionListener(new ColorAction(Color.GREEN));
+        buttonPanel.add(greenButton);
+        buttonPanel.add(new NotHelloWorldComponent());
+        add(buttonPanel);
+        //pack();
+    }
+
+    private class ColorAction implements ActionListener {
+        private Color bgcolor;
+        public ColorAction(Color color) {
+            bgcolor = color;
+        }
+        public void actionPerformed(ActionEvent event) {
+            buttonPanel.setBackground(bgcolor);
+        }
     }
 }
 

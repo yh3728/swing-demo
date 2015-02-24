@@ -47,15 +47,17 @@ class SimpleFrame extends JFrame {
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
         buttonPanel = new JPanel();
-        JButton yellowButton = new JButton("Yellow");
-        yellowButton.addActionListener(new ColorAction(Color.YELLOW));
-        buttonPanel.add(yellowButton);
-        JButton greenButton = new JButton("Green");
-        greenButton.addActionListener(new ColorAction(Color.GREEN));
-        buttonPanel.add(greenButton);
+        button("Yellow", Color.YELLOW);
+        button("Green", Color.GREEN);
         buttonPanel.add(new NotHelloWorldComponent());
         add(buttonPanel);
         //pack();
+    }
+
+    public void button(String name, Color bgcolor) {
+        JButton b = new JButton(name);
+        b.addActionListener(new ColorAction(bgcolor));
+        buttonPanel.add(b);
     }
 
     private class ColorAction implements ActionListener {

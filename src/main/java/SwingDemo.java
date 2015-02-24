@@ -54,21 +54,17 @@ class SimpleFrame extends JFrame {
         //pack();
     }
 
-    public void button(String name, Color bgcolor) {
+    public void button(String name, final Color bgcolor) {
         JButton b = new JButton(name);
-        b.addActionListener(new ColorAction(bgcolor));
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                buttonPanel.setBackground(bgcolor);
+            }
+        });
         buttonPanel.add(b);
     }
 
-    private class ColorAction implements ActionListener {
-        private Color bgcolor;
-        public ColorAction(Color color) {
-            bgcolor = color;
-        }
-        public void actionPerformed(ActionEvent event) {
-            buttonPanel.setBackground(bgcolor);
-        }
-    }
+
 }
 
 class NotHelloWorldComponent extends JComponent {

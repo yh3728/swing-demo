@@ -51,7 +51,7 @@ class SimpleFrame extends JFrame {
         button("Green", Color.GREEN);
         buttonPanel.add(new NotHelloWorldComponent());
         add(buttonPanel);
-        //pack();
+        pack();
     }
 
     public void button(String name, final Color bgcolor) {

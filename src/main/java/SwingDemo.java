@@ -22,6 +22,7 @@ public class SwingDemo {
             @Override
             public void run() {
                 SimpleFrame frame = new SimpleFrame();
+
                 frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 //frame.setUndecorated(true);
                 //frame.setResizable(false);
@@ -47,14 +48,30 @@ class SimpleFrame extends JFrame {
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
         buttonPanel = new JPanel();
-        button("Yellow", Color.YELLOW);
-        button("Green", Color.GREEN);
+        colorButton("Yellow", Color.YELLOW);
+        colorButton("Green", Color.GREEN);
         buttonPanel.add(new NotHelloWorldComponent());
+        for(UIManager.LookAndFeelInfo i : UIManager.getInstalledLookAndFeels()) {
+            themeButton(i.getName(), i.getClassName());
+        }
         add(buttonPanel);
         pack();
     }
 
-    public void button(String name, final Color bgcolor) {
+    public void themeButton(String name, final String plaf) {
+        JButton b = new JButton(name);
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                try {
+                    UIManager.setLookAndFeel(plaf);
+                    SwingUtilities.updateComponentTreeUI(SimpleFrame.this);
+                } catch(Exception e) { e.printStackTrace(); }
+            }
+        });
+        buttonPanel.add(b);
+    }
+
+    public void colorButton(String name, final Color bgcolor) {
         JButton b = new JButton(name);
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -63,8 +80,6 @@ class SimpleFrame extends JFrame {
         });
         buttonPanel.add(b);
     }
-
-
 }
 
 class NotHelloWorldComponent extends JComponent {

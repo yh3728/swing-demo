@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
@@ -56,6 +58,14 @@ class SimpleFrame extends JFrame {
         }
         add(buttonPanel);
         pack();
+
+        addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e) {
+                if(true) {
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     public void themeButton(String name, final String plaf) {

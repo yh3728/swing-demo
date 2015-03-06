@@ -50,8 +50,19 @@ class SimpleFrame extends JFrame {
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
         buttonPanel = new JPanel();
-        colorButton("Yellow", Color.YELLOW);
-        colorButton("Green", Color.GREEN);
+
+        buttonPanel.add(new JButton(
+                        new ColorAction("Blue", new ImageIcon("blue-ball.gif"), Color.BLUE)
+        ));
+
+        buttonPanel.add(new JButton(
+                new ColorAction("Green", new ImageIcon("green-ball.gif"), Color.GREEN)
+        ));
+
+        buttonPanel.add(new JButton(
+                new ColorAction("Yellow", new ImageIcon("green-ball.gif"), Color.YELLOW)
+        ));
+
         buttonPanel.add(new NotHelloWorldComponent());
         for(UIManager.LookAndFeelInfo i : UIManager.getInstalledLookAndFeels()) {
             themeButton(i.getName(), i.getClassName());
@@ -81,14 +92,18 @@ class SimpleFrame extends JFrame {
         buttonPanel.add(b);
     }
 
-    public void colorButton(String name, final Color bgcolor) {
-        JButton b = new JButton(name);
-        b.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                buttonPanel.setBackground(bgcolor);
-            }
-        });
-        buttonPanel.add(b);
+    public class ColorAction extends AbstractAction {
+        public ColorAction(String name, Icon icon, Color c) {
+            putValue(Action.NAME, name);
+            putValue(Action.SMALL_ICON, icon);
+            putValue("color", c);
+            putValue(Action.SHORT_DESCRIPTION, "Set panel color to " + name.toLowerCase());
+        }
+
+        public void actionPerformed(ActionEvent event) {
+            Color c = (Color) getValue("color");
+            buttonPanel.setBackground(c);
+        }
     }
 }
 
@@ -122,4 +137,5 @@ class NotHelloWorldComponent extends JComponent {
     }
 
     public Dimension getPreferredSize() { return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT); }
+
 }

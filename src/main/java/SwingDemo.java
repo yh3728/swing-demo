@@ -51,17 +51,23 @@ class SimpleFrame extends JFrame {
 
         buttonPanel = new JPanel();
 
-        buttonPanel.add(new JButton(
-                        new ColorAction("Blue", new ImageIcon("blue-ball.gif"), Color.BLUE)
-        ));
+        ColorAction yellowAction = new ColorAction("Yellow", new ImageIcon("green-ball.gif"), Color.YELLOW);
+        ColorAction blueAction = new ColorAction("Blue", new ImageIcon("blue-ball.gif"), Color.BLUE);
+        ColorAction greenAction = new ColorAction("Green", new ImageIcon("green-ball.gif"), Color.GREEN);
 
-        buttonPanel.add(new JButton(
-                new ColorAction("Green", new ImageIcon("green-ball.gif"), Color.GREEN)
-        ));
+        buttonPanel.add(new JButton(yellowAction));
+        buttonPanel.add(new JButton(blueAction));
+        buttonPanel.add(new JButton(greenAction));
 
-        buttonPanel.add(new JButton(
-                new ColorAction("Yellow", new ImageIcon("green-ball.gif"), Color.YELLOW)
-        ));
+        InputMap imap = buttonPanel.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        imap.put(KeyStroke.getKeyStroke("ctrl Y"), "panel.yellow");
+        imap.put(KeyStroke.getKeyStroke("ctrl B"), "panel.blue");
+        imap.put(KeyStroke.getKeyStroke("ctrl G"), "panel.green");
+
+        ActionMap amap = buttonPanel.getActionMap();
+        amap.put("panel.yellow", yellowAction);
+        amap.put("panel.blue", blueAction);
+        amap.put("panel.green", greenAction);
 
         buttonPanel.add(new NotHelloWorldComponent());
         for(UIManager.LookAndFeelInfo i : UIManager.getInstalledLookAndFeels()) {
